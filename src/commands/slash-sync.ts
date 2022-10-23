@@ -13,8 +13,18 @@ export default class SlashSync implements Command {
 
     async execute(
         env: Env,
-        _interaction: APIInteraction
+        interaction: APIInteraction
     ): Promise<Response> {
+
+        const user = interaction.user || interaction.member;
+        if (user.id !== "195512978634833920") {
+            return jsonResponse({
+                type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+                data: {
+                    content: "You don't have permission to sync commands!",
+                },
+            });
+        }
         
         const url = `https://discord.com/api/v10/applications/${env.DISCORD_APPLICATION_ID}/commands`;
 
