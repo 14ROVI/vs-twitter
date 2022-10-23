@@ -4,6 +4,7 @@ import { jsonResponse } from './utils/response';
 import MessageGet from './commands/message-get';
 import SlashGet from './commands/slash-get';
 import SlashSync from './commands/slash-sync';
+import { Interaction, InteractionResponseType, InteractionType } from './utils/discord-types';
 
 
 export interface Env {

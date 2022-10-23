@@ -1,4 +1,5 @@
 import { Env } from "..";
+import { ApplicationCommandOptionType, ApplicationCommandType, Interaction } from "../utils/discord-types";
 
 export abstract class Command {
     abstract name: string;

@@ -1,6 +1,6 @@
 // To stop massive amounts of random types, stuff I won't use is Object.
 
-enum InteractionResponseType {
+export enum InteractionResponseType {
     PONG = 1,
     CHANNEL_MESSAGE_WITH_SOURCE = 4,
     DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5,
@@ -10,7 +10,7 @@ enum InteractionResponseType {
     MODAL = 9,
 }
 
-interface Interaction {
+export interface Interaction {
     id: string;
     application_id: string;
     type: InteractionType;
@@ -27,7 +27,7 @@ interface Interaction {
     guild_locale?: string;
 }
 
-enum InteractionType {
+export enum InteractionType {
     PING = 1,
     APPLICATION_COMMAND = 2,
     MESSAGE_COMPONENT = 3,
@@ -35,13 +35,13 @@ enum InteractionType {
     MODAL_SUBMIT = 5,
 }
 
-enum ApplicationCommandType {
+export enum ApplicationCommandType {
     CHAT_INPUT = 1, // Slash commands; a text-based command that shows up when a user types /
     USER = 2, // A UI-based command that shows up when you right click or tap on a user
     MESSAGE = 3, // A UI-based command that shows up when you right click or tap on a message
 }
 
-enum ApplicationCommandOptionType {
+export enum ApplicationCommandOptionType {
     SUB_COMMAND = 1,
     SUB_COMMAND_GROUP = 2,
     STRING = 3,
@@ -55,7 +55,7 @@ enum ApplicationCommandOptionType {
     ATTACHMENT = 11
 }
 
-interface InteractionData {
+export interface InteractionData {
     id: string;
     name: string;
     type: ApplicationCommandType;
@@ -65,7 +65,7 @@ interface InteractionData {
     target_id?: string;
 }
 
-interface InteractionResolvedData {
+export interface InteractionResolvedData {
     users?: Map<string, User>;
     members?: Map<string, Member>;
     roles?: any[];
@@ -74,7 +74,7 @@ interface InteractionResolvedData {
     attachments?: any[];
 }
 
-interface InteractionDataOption {
+export interface InteractionDataOption {
     name: string;
     type: ApplicationCommandOptionType;
     value?: string | number;
@@ -82,7 +82,7 @@ interface InteractionDataOption {
     focused?: boolean;
 }
 
-interface Member {
+export interface Member {
     user?: User;
     nick?: string;
     avatar?: string;
@@ -96,7 +96,7 @@ interface Member {
     communication_disabled_until?: string;
 }
 
-interface User {
+export interface User {
     id: string;
     username: string;
     discriminator: string;
@@ -114,7 +114,7 @@ interface User {
     public_flags?: number;
 }
 
-interface Message {
+export interface Message {
     id: string;
     channel_id: string;
     author:	User;

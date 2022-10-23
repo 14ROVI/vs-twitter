@@ -1,4 +1,5 @@
 import { Env } from "..";
+import { ApplicationCommandOptionType, ApplicationCommandType, Interaction, InteractionResponseType } from "../utils/discord-types";
 import { jsonResponse } from "../utils/response";
 import getMedia from "../utils/twitter";
 import { Command } from "./base";
