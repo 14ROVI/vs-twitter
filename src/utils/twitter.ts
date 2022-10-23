@@ -32,8 +32,7 @@ export default async function getMedia(token: string, message: string): Promise<
         if (match.groups)
             ids.push(match.groups.id);
 
-    if (ids.length === 0)
-        return [];
+    if (ids.length === 0) return [];
         
     const request = await fetch(
         `https://api.twitter.com/2/tweets?ids=${ids.join(",")}&tweet.fields=attachments&expansions=attachments.media_keys&media.fields=media_key,type,variants`, {
@@ -42,6 +41,9 @@ export default async function getMedia(token: string, message: string): Promise<
             }
         }
     );
+    
+    if (!request.ok) return [];
+
     const data: jsonResponse = await request.json();
 
     let video_urls = (data.includes?.media || []).map(m => {

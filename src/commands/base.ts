@@ -1,6 +1,4 @@
-import { APIInteraction, ApplicationCommandOptionType, ApplicationCommandType } from "discord-api-types/v10";
 import { Env } from "..";
-
 
 export abstract class Command {
     abstract name: string;
@@ -10,7 +8,7 @@ export abstract class Command {
 
     abstract execute(
         env: Env,
-        interaction: APIInteraction,
+        interaction: Interaction,
     ): Promise<Response>;
 }
 

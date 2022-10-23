@@ -1,5 +1,3 @@
-import { APIInteraction, ApplicationCommandType } from "discord-api-types/v10";
-import { InteractionResponseType } from "discord-interactions";
 import { commands, Env } from "..";
 import { jsonResponse } from "../utils/response";
 import { Command } from "./base";
@@ -8,16 +6,15 @@ import { Command } from "./base";
 export default class SlashSync implements Command {
     name = "sync";
     description = "Syncs all the commands this bot has. Can only be used by the bot's owner!";
-    type = ApplicationCommandType.ChatInput;
+    type = ApplicationCommandType.CHAT_INPUT;
     options = [];
 
     async execute(
         env: Env,
-        interaction: APIInteraction
+        interaction: Interaction
     ): Promise<Response> {
-
-        const user = interaction.user || interaction.member;
-        if (user.id !== "195512978634833920") {
+        const user = interaction.user || interaction.member?.user;
+        if (user === undefined || user.id !== env.DISCORD_OWNER_ID) {
             return jsonResponse({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {

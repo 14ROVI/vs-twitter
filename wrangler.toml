@@ -5,6 +5,7 @@ compatibility_date = "2022-10-21"
 node_compat = true
 
 [vars]
+DISCORD_OWNER_ID = "195512978634833920"
 
 # make sure to add these secrets to the environment:
 # - DISCORD_APPLICATION_ID

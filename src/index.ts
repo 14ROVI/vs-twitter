@@ -1,6 +1,5 @@
 import { verifyKey } from 'discord-interactions';
 import { jsonResponse } from './utils/response';
-import { InteractionType, InteractionResponseType, APIInteraction } from 'discord-api-types/v10';
 
 import MessageGet from './commands/message-get';
 import SlashGet from './commands/slash-get';
@@ -8,6 +7,7 @@ import SlashSync from './commands/slash-sync';
 
 
 export interface Env {
+    DISCORD_OWNER_ID: string;
     DISCORD_APPLICATION_ID: string;
     DISCORD_PUBLIC_KEY: string;
     DISCORD_SECRET: string;
@@ -54,29 +54,26 @@ export const commands = [
 async function handleInteraction(
     request: Request,
     env: Env,
-    ctx: ExecutionContext
+    _ctx: ExecutionContext
 ): Promise<Response> {
-    const interaction: APIInteraction = await request.json();
-    console.log(interaction);
+    const interaction: Interaction = await request.json();
 
-    if (interaction.type === InteractionType.Ping) {
+    if (interaction.type === InteractionType.PING) {
         console.log("Handling Ping request");
         return jsonResponse({
-            type: InteractionResponseType.Pong,
+            type: InteractionResponseType.PONG,
         });
     }
             
-    if (interaction.type === InteractionType.ApplicationCommand) {
-        const command = commands.find(c => c.name.toLowerCase() === interaction.data.name.toLowerCase() && c.type == interaction.data.type);
+    if (interaction.type === InteractionType.APPLICATION_COMMAND) {
+        const command = commands.find(c => c.name.toLowerCase() === interaction.data?.name.toLowerCase() && c.type == interaction.data.type);
         
         if (command !== undefined) {
             return await command.execute(env, interaction);
         } else {
-            console.error("Unknown Command");
             return jsonResponse({ error: "Unknown Command" }, { status: 404 });
         }
     }
-            
-    console.error("Unknown Type");
+
     return jsonResponse({ error: "Unknown Type" }, { status: 400 });
 }
