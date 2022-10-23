@@ -66,12 +66,12 @@ export interface InteractionData {
 }
 
 export interface InteractionResolvedData {
-    users?: Map<string, User>;
-    members?: Map<string, Member>;
-    roles?: any[];
-    channels?: any[];
-    messages?: Map<string, Message>;
-    attachments?: any[];
+    users?: { [key: string]: User };
+    members?: { [key: string]: Member };
+    roles?: { [key: string]: any };
+    channels?: { [key: string]: any };
+    messages?: { [key: string]: Message };
+    attachments?: { [key: string]: any };
 }
 
 export interface InteractionDataOption {
