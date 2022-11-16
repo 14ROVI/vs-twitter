@@ -21,7 +21,7 @@ function B64decode(value: string) {
 };
 
 export function encodeUrl(url: string): string {
-    const re = /\/ext_tw_video\/(?<tweet_id>\d+)\/pu\/vid\/(?<width>\d+)x(?<height>\d+)\/(?<video_id>\w+).mp4/;
+    const re = /\/ext_tw_video\/(?<tweet_id>\d+)\/pu\/vid\/(?<width>\d+)x(?<height>\d+)\/(?<video_id>\w+).mp4/g;
 
     const matches = url.matchAll(re);
     
