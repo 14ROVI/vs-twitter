@@ -11,10 +11,10 @@ function B64encode(value: number) {
 };
 
 function B64decode(value: string) {
-    var result = 0;
+    let result = 0n;
     for (var i = 0, len = value.length; i < len; i++) {
-        result *= 64;
-        result += ALPHA_NUMS.indexOf(value[i]);
+        result *= 64n;
+        result += BigInt(ALPHA_NUMS.indexOf(value[i]));
     }
 
     return result;
@@ -27,13 +27,33 @@ export function encodeUrl(url: string): string {
     
     for (const match of matches) {
         if (match.groups) {
-            let tweet_id = B64encode(parseInt(match.groups[0]));
-            let width = B64encode(parseInt(match.groups[1]));
-            let height = B64encode(parseInt(match.groups[2]));
-            let video_id = match.groups[3];
+            console.log(match.groups);
+            let tweet_id = B64encode(parseInt(match.groups.tweet_id));
+            let width = B64encode(parseInt(match.groups.width));
+            let height = B64encode(parseInt(match.groups.height));
+            let video_id = match.groups.video_id;
             return `https://vst.rovi.me/${tweet_id}/${width}/${height}/${video_id}.mp4`;
         }
     }
 
     return url;
+}
+
+export function decodeUrl(url: string): string | undefined {
+    const re = /\/(?<tweet_id>\w+)\/(?<width>\w+)\/(?<height>\w+)\/(?<video_id>\w+).mp4/g;
+
+    const matches = url.matchAll(re);
+    
+    for (const match of matches) {
+        if (match.groups) {
+            console.log(match.groups);
+            let tweet_id = B64decode(match.groups.tweet_id);
+            let width = B64decode(match.groups.width);
+            let height = B64decode(match.groups.height);
+            let video_id = match.groups.video_id;
+            return `https://video.twimg.com/ext_tw_video/${tweet_id}/pu/vid/${width}x${height}/${video_id}.mp4`;
+        }
+    }
+
+    return undefined;
 }

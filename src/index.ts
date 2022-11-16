@@ -1,5 +1,6 @@
 import { verifyKey } from 'discord-interactions';
 import { jsonResponse } from './utils/response';
+import { decodeUrl } from './utils/encoded-url';
 
 import MessageGet from './commands/message-get';
 import SlashGet from './commands/slash-get';
@@ -40,8 +41,16 @@ export default {
                 return new Response("Bad request signature.", { status: 401 });
             }
         }
-
-        return new Response("Post requests only please :)", { status: 405 });
+        else if (request.method === "GET") {
+            let redirect = decodeUrl(request.url);
+            if (redirect) {
+                return Response.redirect(redirect, 301);
+            }
+            else {
+                return new Response("Bad request.", { status: 401 });
+            }
+        }
+        return new Response("POST or GET please :)", { status: 405 });
     }
 }
 

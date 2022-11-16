@@ -51,12 +51,11 @@ export default async function getMedia(token: string, message: string): Promise<
     let video_urls = (data.includes?.media || []).map(m => {
         if (m.type === "video" || m.type == "animated_gif")
             return m.variants?.sort((a, b) => (b.bit_rate || 0) - (a.bit_rate || 0))
-                .filter(v => v.content_type === "video/mp4")
-                [0].url;
+                .filter(v => v.content_type === "video/mp4")[0]
+                .url;
         else return undefined;
-    }).filter((e) => e !== undefined) as string[];
-
-    console.log(video_urls.map(u => encodeUrl(u)));
+    }).filter((e) => e !== undefined)
+    .map(u => u ? encodeUrl(u) : undefined) as string[];
 
     return video_urls;
 }
