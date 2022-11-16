@@ -1,3 +1,5 @@
+import { encodeUrl } from "./encoded-url";
+
 interface jsonResponse {
     data: Tweet[];
     includes?: {
@@ -53,6 +55,8 @@ export default async function getMedia(token: string, message: string): Promise<
                 [0].url;
         else return undefined;
     }).filter((e) => e !== undefined) as string[];
+
+    console.log(video_urls.map(u => encodeUrl(u)));
 
     return video_urls;
 }
