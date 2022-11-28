@@ -21,7 +21,7 @@ function B64decode(value: string) {
 };
 
 export function encodeUrl(url: string): string {
-    const re = /\/ext_tw_video\/(?<tweet_id>\d+)\/pu\/vid\/(?<width>\d+)x(?<height>\d+)\/(?<video_id>\w+).mp4/g;
+    const re = /\/ext_tw_video\/(?<tweet_id>\d+)\/pu\/vid\/(?<width>\d+)x(?<height>\d+)\/(?<video_id>.*+).mp4/g;
 
     const matches = url.matchAll(re);
     
@@ -40,7 +40,7 @@ export function encodeUrl(url: string): string {
 }
 
 export function decodeUrl(url: string): string | undefined {
-    const re = /\/(?<tweet_id>\w+)\/(?<width>\w+)\/(?<height>\w+)\/(?<video_id>\w+).mp4/g;
+    const re = /\/(?<tweet_id>\w+)\/(?<width>\w+)\/(?<height>\w+)\/(?<video_id>.*+).mp4/g;
 
     const matches = url.matchAll(re);
     
