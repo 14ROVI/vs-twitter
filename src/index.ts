@@ -69,7 +69,6 @@ async function handleInteraction(
     const interaction: Interaction = await request.json();
 
     if (interaction.type === InteractionType.PING) {
-        console.log("Handling Ping request");
         return jsonResponse({
             type: InteractionResponseType.PONG,
         });

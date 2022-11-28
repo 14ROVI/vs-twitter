@@ -1,11 +1,12 @@
 const ALPHA_NUMS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+_";
-function B64encode(value: number) {
-    var result = '', mod;
+function B64encode(value: number | bigint) {
+    let big_value = BigInt(value);
+    let result = '', mod;
     do {
-        mod = value % 64;
-        result = ALPHA_NUMS.charAt(mod) + result;
-        value = Math.floor(value / 64);
-    } while(value > 0);
+        mod = big_value % 64n;
+        result = ALPHA_NUMS.charAt(Number(mod)) + result;
+        big_value = big_value / 64n;
+    } while (big_value > 0);
 
     return result;
 };
@@ -21,14 +22,14 @@ function B64decode(value: string) {
 };
 
 export function encodeUrl(url: string): string {
-    const re = /\/ext_tw_video\/(?<tweet_id>\d+)\/pu\/vid\/(?<width>\d+)x(?<height>\d+)\/(?<video_id>.*+).mp4/g;
+    const re = /\/ext_tw_video\/(?<tweet_id>\d+)\/pu\/vid\/(?<width>\d+)x(?<height>\d+)\/(?<video_id>.*).mp4/g;
 
     const matches = url.matchAll(re);
     
     for (const match of matches) {
         if (match.groups) {
             console.log(match.groups);
-            let tweet_id = B64encode(parseInt(match.groups.tweet_id));
+            let tweet_id = B64encode(BigInt(match.groups.tweet_id));
             let width = B64encode(parseInt(match.groups.width));
             let height = B64encode(parseInt(match.groups.height));
             let video_id = match.groups.video_id;
@@ -40,7 +41,7 @@ export function encodeUrl(url: string): string {
 }
 
 export function decodeUrl(url: string): string | undefined {
-    const re = /\/(?<tweet_id>\w+)\/(?<width>\w+)\/(?<height>\w+)\/(?<video_id>.*+).mp4/g;
+    const re = /\/(?<tweet_id>\w+)\/(?<width>\w+)\/(?<height>\w+)\/(?<video_id>.*).mp4/g;
 
     const matches = url.matchAll(re);
     
