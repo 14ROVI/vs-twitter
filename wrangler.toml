@@ -2,7 +2,10 @@ name = "vs-twitter"
 main = "src/index.ts"
 compatibility_date = "2022-10-21"
 
-node_compat = true
+[[rules]]
+type = "Data"
+globs = ["**/*.html"]
+fallthrough = false
 
 [vars]
 DISCORD_OWNER_ID = "195512978634833920"
