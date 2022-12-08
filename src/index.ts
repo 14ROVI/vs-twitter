@@ -6,6 +6,7 @@ import MessageGet from './commands/message-get';
 import SlashGet from './commands/slash-get';
 import SlashSync from './commands/slash-sync';
 import { Interaction, InteractionResponseType, InteractionType } from './utils/discord-types';
+import HTML from './index.html';
 
 
 export interface Env {
@@ -47,7 +48,10 @@ export default {
                 return Response.redirect(redirect, 301);
             }
             else {
-                return new Response("Bad request.", { status: 401 });
+                return new Response(HTML, {
+                    headers: {"Content-Type": "text/html;charset=UTF-8"},
+                    status: 200
+                });
             }
         }
         return new Response("POST or GET please :)", { status: 405 });
