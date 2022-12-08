@@ -26,7 +26,7 @@ interface TweetMediaVariant {
 }
 
 export default async function getMedia(token: string, message: string): Promise<string[]> {
-    const re = /https?:\/\/twitter\.com\/\w+\/status(es)?\/(?<id>\d+)/g;
+    const re = /https?:\/\/(fx)?twitter\.com\/\w+\/status(es)?\/(?<id>\d+)/g;
 
     const matches = message.matchAll(re);
     let ids = [];
