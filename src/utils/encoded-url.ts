@@ -1,4 +1,4 @@
-const ALPHA_NUMS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+_";
+const ALPHA_NUMS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 function B64encode(value: number | bigint) {
     let big_value = BigInt(value);
     let result = '', mod;
@@ -41,7 +41,7 @@ export function encodeUrl(url: string): string {
 }
 
 export function decodeUrl(url: string): string | undefined {
-    const re = /\/(?<tweet_id>[a-zA-Z0-9+_]+)\/(?<width>[a-zA-Z0-9+_]+)\/(?<height>[a-zA-Z0-9+_]+)\/(?<video_id>.*).mp4/g;
+    const re = /\/(?<tweet_id>[a-zA-Z0-9\-_]+)\/(?<width>[a-zA-Z0-9\-_]+)\/(?<height>[a-zA-Z0-9\-_]+)\/(?<video_id>.*).mp4/g;
 
     const matches = url.matchAll(re);
     
