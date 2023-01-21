@@ -7,6 +7,7 @@ import SlashGet from './commands/slash-get';
 import SlashSync from './commands/slash-sync';
 import { Interaction, InteractionResponseType, InteractionType } from './utils/discord-types';
 import HTML from './index.html';
+import getMedia from "../utils/twitter";
 
 
 export interface Env {
@@ -47,12 +48,16 @@ export default {
             if (redirect) {
                 return Response.redirect(redirect, 301);
             }
-            else {
-                return new Response(HTML, {
-                    headers: {"Content-Type": "text/html;charset=UTF-8"},
-                    status: 200
-                });
+            
+            let inline = await getMedia(env.TWITTER_BEARER_TOKEN, request.url);
+            if (inline.length > 0) {
+                return Response.redirect(inline[0], 301);
             }
+
+            return new Response(HTML, {
+                headers: {"Content-Type": "text/html;charset=UTF-8"},
+                status: 200
+            });
         }
         return new Response("POST or GET please :)", { status: 405 });
     }
