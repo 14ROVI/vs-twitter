@@ -7,7 +7,7 @@ import SlashGet from './commands/slash-get';
 import SlashSync from './commands/slash-sync';
 import { Interaction, InteractionResponseType, InteractionType } from './utils/discord-types';
 import HTML from './index.html';
-import getMedia from "../utils/twitter";
+import getMedia from "./utils/twitter";
 
 
 export interface Env {
