@@ -64,7 +64,7 @@ export function decodeUrl(url: string): string | undefined {
             let type = match.groups.type;
             let video_id = match.groups.video_id;
             if (type === "t") {
-                `https://video.twimg.com/tweet_video/${video_id}.mp4`;
+                return `https://video.twimg.com/tweet_video/${video_id}.mp4`;
             } else {
                 let tweet_id = B64decode(match.groups.tweet_id);
                 let width = B64decode(match.groups.width);
