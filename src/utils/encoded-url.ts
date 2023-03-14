@@ -62,16 +62,19 @@ export function decodeUrl(url: string): string | undefined {
     for (const match of url.matchAll(re)) {
         if (match.groups) {
             let type = match.groups.type;
-            let tweet_id = B64decode(match.groups.tweet_id);
-            let width = B64decode(match.groups.width);
-            let height = B64decode(match.groups.height);
             let video_id = match.groups.video_id;
-            if (type === "e" || type === undefined) {
-                return `https://video.twimg.com/ext_tw_video/${tweet_id}/pu/vid/${width}x${height}/${video_id}.mp4`;
-            } else if (type === "a") {
-                return `https://video.twimg.com/amplify_video/${tweet_id}/vid/${width}x${height}/${video_id}.mp4`;
-            } else if (type === "t") {
+            if (type === "t") {
                 `https://video.twimg.com/tweet_video/${video_id}.mp4`;
+            } else {
+                let tweet_id = B64decode(match.groups.tweet_id);
+                let width = B64decode(match.groups.width);
+                let height = B64decode(match.groups.height);
+                
+                if (type === "e" || type === undefined) {
+                    return `https://video.twimg.com/ext_tw_video/${tweet_id}/pu/vid/${width}x${height}/${video_id}.mp4`;
+                } else if (type === "a") {
+                    return `https://video.twimg.com/amplify_video/${tweet_id}/vid/${width}x${height}/${video_id}.mp4`;
+                }
             }
         }
     }
