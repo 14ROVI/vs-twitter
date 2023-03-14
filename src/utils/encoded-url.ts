@@ -24,6 +24,7 @@ function B64decode(value: string) {
 export function encodeUrl(url: string): string {
     const extRe = /\/ext_tw_video\/(?<tweet_id>\d+)\/pu\/vid\/(?<width>\d+)x(?<height>\d+)\/(?<video_id>.*).mp4/g;
     const amplifyRe = /\/amplify_video\/(?<tweet_id>\d+)\/vid\/(?<width>\d+)x(?<height>\d+)\/(?<video_id>.*).mp4/g;
+    const tweetVidRe = /\/tweet_video\/(?<video_id>.*).mp4/g;
 
     for (const match of url.matchAll(extRe)) {
         if (match.groups) {
@@ -45,11 +46,18 @@ export function encodeUrl(url: string): string {
         }
     }
 
+    for (const match of url.matchAll(tweetVidRe)) {
+        if (match.groups) {
+            let video_id = match.groups.video_id;
+            return `https://vst.rovi.me/t/${video_id}.mp4`;
+        }
+    }
+
     return url;
 }
 
 export function decodeUrl(url: string): string | undefined {
-    const re = /(?:\/(?<type>[ae]))?\/(?<tweet_id>[a-zA-Z0-9\-_]+)\/(?<width>[a-zA-Z0-9\-_]+)\/(?<height>[a-zA-Z0-9\-_]+)\/(?<video_id>.*).mp4/g;
+    const re = /vst.rovi.me(?:\/(?<type>[aet]))?(\/(?<tweet_id>[a-zA-Z0-9\-_]+))?(\/(?<width>[a-zA-Z0-9\-_]+))?(\/(?<height>[a-zA-Z0-9\-_]+))?\/(?<video_id>.*)\.mp4/g;
 
     for (const match of url.matchAll(re)) {
         if (match.groups) {
@@ -62,6 +70,8 @@ export function decodeUrl(url: string): string | undefined {
                 return `https://video.twimg.com/ext_tw_video/${tweet_id}/pu/vid/${width}x${height}/${video_id}.mp4`;
             } else if (type === "a") {
                 return `https://video.twimg.com/amplify_video/${tweet_id}/vid/${width}x${height}/${video_id}.mp4`;
+            } else if (type === "t") {
+                `https://video.twimg.com/tweet_video/${video_id}.mp4`;
             }
         }
     }
