@@ -43,6 +43,8 @@ export default async function getMedia(token: string, message: string): Promise<
             }
         }
     );
+
+    console.log(request);
     
     if (!request.ok) return [];
 
