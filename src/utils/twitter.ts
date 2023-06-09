@@ -25,7 +25,7 @@ interface TweetMediaVariant {
     url: string
 }
 
-export default async function getMedia(token: string, message: string): Promise<string[]> {
+export default async function getMedia(token: string, message: string): Promise<string[] | string> {
     const re = /twitter\.com\/\w+\/status(es)?\/(?<id>\d+)/g;
 
     const matches = message.matchAll(re);
@@ -36,6 +36,8 @@ export default async function getMedia(token: string, message: string): Promise<
 
     if (ids.length === 0) return [];
         
+    console.log(ids);
+
     const request = await fetch(
         `https://api.twitter.com/2/tweets?ids=${ids.join(",")}&tweet.fields=attachments&expansions=attachments.media_keys&media.fields=media_key,type,variants`, {
             "headers": {
@@ -44,9 +46,10 @@ export default async function getMedia(token: string, message: string): Promise<
         }
     );
 
-    console.log(request);
-    
-    if (!request.ok) return [];
+    if (!request.ok) {
+        console.log(await request.text());
+        return "Error with the Twitter API :(";
+    }
 
     const data: jsonResponse = await request.json();
 

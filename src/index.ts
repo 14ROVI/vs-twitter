@@ -50,7 +50,13 @@ export default {
             }
             
             let inline = await getMedia(env.TWITTER_BEARER_TOKEN, request.url);
-            if (inline.length > 0) {
+            if (typeof inline === "string") {
+                return new Response(inline, {
+                    headers: {"Content-Type": "text/html;charset=UTF-8"},
+                    status: 200
+                });
+            }
+            else if (inline.length > 0) {
                 return Response.redirect(inline[0], 301);
             }
 

@@ -24,10 +24,18 @@ export default class MessageGet implements Command {
             });
         const video_urls = await getMedia(env.TWITTER_BEARER_TOKEN, resolved_messages[target_id].content);
 
+        let content = "";
+        if (typeof video_urls === "string") {
+            content = video_urls;
+        }
+        else {
+            content = video_urls.join("\n") || "Couldn't find anything :(";
+        }
+
         return jsonResponse({
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
-                content: video_urls.join("\n") || "Couldn't find anything :(",
+                content: content,
             },
         });
     }
