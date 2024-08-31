@@ -56,10 +56,10 @@ export function encodeUrl(url: string): string {
     return url;
 }
 
-export function decodeUrl(url: string): string | undefined {
-    const re = /vst.rovi.me(?:\/(?<type>[aet]))?(\/(?<tweet_id>[a-zA-Z0-9\-_]+))?(\/(?<width>[a-zA-Z0-9\-_]+))?(\/(?<height>[a-zA-Z0-9\-_]+))?\/(?<video_id>.*)\.mp4/g;
+export function decodeUrl(pathname: string): string | undefined {
+    const re = /(?:\/(?<type>[aet]))?(\/(?<tweet_id>[a-zA-Z0-9\-_]+))?(\/(?<width>[a-zA-Z0-9\-_]+))?(\/(?<height>[a-zA-Z0-9\-_]+))?\/(?<video_id>.*)\.mp4/g;
 
-    for (const match of url.matchAll(re)) {
+    for (const match of pathname.matchAll(re)) {
         if (match.groups) {
             let type = match.groups.type;
             let video_id = match.groups.video_id;
